@@ -1,9 +1,7 @@
 ---
 - hosts: service
-
-  vars: 
-    config_dir: '.config'
-    templates_dir: 'templates'
+  vars_files:
+    - vars/main.yml
     
   tasks:
 
@@ -48,7 +46,6 @@
         name: named
         state: restarted
       
-
 # httpd install and config
 
     - name: yum 
@@ -132,4 +129,3 @@
       systemd:
         name: firewalld
         state: reloaded
-      

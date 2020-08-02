@@ -1,0 +1,38 @@
+$TTL 86400
+@ IN SOA dns-primary.whatever.com. admin.whatever.com. (
+  2020011800 ;Serial
+  3600 ;Refresh
+  1800 ;Retry
+  604800 ;Expire
+  86400 ;Minimum TTL
+)
+
+;Name Server Information
+@ IN NS dns-primary.whatever.com.
+
+;DNS for domain
+bootstrap   IN A 192.168.1.10
+dns-primary IN A 192.168.1.11
+nuc1        IN A 192.168.1.11
+nuc2        IN A 192.168.1.12
+nuc3        IN A 192.168.1.13
+nuc4        IN A 192.168.1.14
+
+; The api points to the IP of your load balancer
+api.ocp		        IN A 192.168.1.11
+api-int.ocp             IN A 192.168.1.11
+;
+; The wildcard also points to the load balancer
+*.apps.ocp		IN A 192.168.1.11
+
+; etcd
+etcd-0.ocp	        IN A 192.168.1.12
+etcd-1.ocp	        IN A 192.168.1.13
+etcd-2.ocp	        IN A 192.168.1.14
+
+; The SRV records are IMPORTANT....make sure you get these right...note the trailing dot at the end...
+_etcd-server-ssl._tcp	IN SRV 0 10 2380 etcd-0.ocp.whatever.com.
+_etcd-server-ssl._tcp	IN SRV 0 10 2380 etcd-1.ocp.whatever.com.
+_etcd-server-ssl._tcp	IN SRV 0 10 2380 etcd-2.ocp.whatever.com.
+
+;EOF

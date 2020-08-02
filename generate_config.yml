@@ -1,8 +1,7 @@
 ---
 - hosts: localhost
-  vars: 
-    config_dir: '.config'
-    templates_dir: 'templates'
+  vars_files:
+    - vars/main.yml
   tasks:
     - debug: var=ansible_facts
     - name: Delete temp directory

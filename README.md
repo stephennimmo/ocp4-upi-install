@@ -40,7 +40,7 @@ nmcli connection up br0
 
 ## Checking the Configuration
 
-- Create Configuration Files for Service node - `ansible-playbook -e @cluster.yml playbooks/generate_inventory.yml playbooks/generate_config.yml`
+- Create Configuration Files for Service node - `ansible-playbook -e @cluster.yml generate_inventory.yml generate_config.yml`
     - This creates a '.config' directory in the root of the project with the generated configs in the folders relative to where they should be put on the services node.
 
 # Start the Bootstrap VM

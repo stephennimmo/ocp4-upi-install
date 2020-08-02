@@ -54,7 +54,7 @@ ip=192.168.1.10::192.168.1.1:255.255.255.0:bootstrap.snimmo.com::none
 nameserver=192.168.1.11 
 coreos.inst.install_dev=vda 
 coreos.inst.image_url=http://192.168.1.11:8008/rhcos/metal.raw.gz
-coreos.inst.ignition_url=http://192.168.1.11:8008/ignition/master.ign
+coreos.inst.ignition_url=http://192.168.1.11:8008/ignition/bootstrap.ign
 ```
 
 `/ocp/openshift-install wait-for bootstrap-complete --dir=/ocp/install --log-level=debug`
@@ -75,8 +75,6 @@ coreos.inst.install_dev=sda
 coreos.inst.image_url=http://192.168.1.11:8008/rhcos/metal.raw.gz
 coreos.inst.ignition_url=http://192.168.1.11:8008/ignition/master.ign
 ```
-
-NOTE Using ip=... syntax will set the host with a static IP you provided persistantly accross reboots. The syntax is ip=<ipaddress>::<defaultgw>:<netmask>:<hostname>:<iface>:none. To set the DNS server use nameserver=<dnsserver>. You can use nameserver= multiple times.
 
 # Wait for the Install
 

@@ -45,9 +45,13 @@ nmcli connection up br0
 
 # Start the Bootstrap VM
 
-From the services node.
+From the services node, start the virtual machine.
 
-`virt-install --name=bootstrap --vcpus=4 --ram=8192 --disk path=/nfs/libvirt/bootstrap.qcow2,bus=virtio,size=120 --os-variant rhel8.0 --network bridge=br0,model=virtio --boot menu=on --cdrom /ocp/downloads/installer.iso`
+`virt-install --name=bootstrap --vcpus=4 --ram=8192 --disk path=/var/lib/libvirt/images/bootstrap.qcow2,size=120,bus=virtio --os-variant rhel8.0 --network bridge=br0,model=virtio --boot menu=on --cdrom /ocp/downloads/installer.iso`
+
+Once booted, press tab on the boot menu and append the following to the end of the boot options. 
+
+> These need to be entered on one line, no CR. They are formatted for your readability. 
 
 ```
 ip=192.168.1.10::192.168.1.1:255.255.255.0:bootstrap.snimmo.com::none
@@ -59,14 +63,19 @@ coreos.inst.ignition_url=http://192.168.1.11:8008/ignition/bootstrap.ign
 
 `/ocp/openshift-install wait-for bootstrap-complete --dir=/ocp/install --log-level=debug`
 
+Once complete, proceed to install the control plane machines. 
+
 # Install RHCOS on Control Plane Machines
+
+Download the RHCOS installer and flash a USB drive. 
 
 Boot into your instance using the RHCOS ISO Installer
 
-Once booted; press tab on the boot menu
-rhcos
+Once booted, press tab on the boot menu and append the following to the end of the boot options. 
 
-Add your staticips and coreos options. Here is an example of what I used for my bootstrap node. (type this ALL IN ONE LINE ...I only used linebreaks here for ease of readability...but type it all in one line)
+> These need to be entered on one line, no CR. They are formatted for your readability. 
+
+> The example below is for the first control plane machine.
 
 ```
 ip=192.168.1.12::192.168.1.1:255.255.255.0:nuc2.snimmo.com::none
@@ -75,6 +84,8 @@ coreos.inst.install_dev=sda
 coreos.inst.image_url=http://192.168.1.11:8008/rhcos/metal.raw.gz
 coreos.inst.ignition_url=http://192.168.1.11:8008/ignition/master.ign
 ```
+
+Do that 2 more times for the other two machines. 
 
 # Wait for the Install
 

@@ -1,0 +1,22 @@
+version: 4.5.2
+domain: whatever.com
+cluster_name: ocp
+ssh_key: 'REQUIRED_KEY'
+pull_secret: 'REQUIRED_PULL_SECRET'
+network:
+  slash_notation: 192.168.1.0/24
+nodes:
+  user: root
+  service:
+    hostname: nuc1
+    ip_address: 192.168.1.11
+  bootstrap:
+    hostname: bootstrap
+    ip_address: 192.168.1.10
+  masters:
+    - hostname: nuc2
+      ip_address: 192.168.1.12
+    - hostname: nuc3
+      ip_address: 192.168.1.13
+    - hostname: nuc4
+      ip_address: 192.168.1.14

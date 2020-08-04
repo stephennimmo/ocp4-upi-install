@@ -19,6 +19,7 @@ dns-primary IN A {{ nodes.service.ip_address }}
 {% endfor %}
 
 ; The api points to the IP of your load balancer
+ocp		        IN A {{ nodes.service.ip_address }}
 api.{{ cluster_name }}		        IN A {{ nodes.service.ip_address }}
 api-int.{{ cluster_name }}             IN A {{ nodes.service.ip_address }}
 ;

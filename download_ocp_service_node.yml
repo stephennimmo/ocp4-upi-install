@@ -73,7 +73,6 @@
       copy:
         src: '{{ config_dir }}/ocp/downloads/.treeinfo'
         dest: '{{ download_dir }}/.treeinfo'
-        group: 'named'
       
     - name: Create version file
       file:

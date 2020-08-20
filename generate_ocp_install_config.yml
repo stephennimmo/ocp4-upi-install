@@ -1,5 +1,8 @@
 ---
 - hosts: service
+  vars_files:
+    - vars/main.yml
+
   tasks:
 
     - name: Delete dirs
@@ -54,7 +57,7 @@
     
     - name: Change file ownership, group and permissions
       file:
-        path: /var/www/html/ignition/*
+        path: /var/www/html/ignition
         mode: '777'
     
     - name: copy metal

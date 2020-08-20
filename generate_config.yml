@@ -50,3 +50,9 @@
       template:
         src: '{{ templates_dir }}/ocp/downloads/.treeinfo.j2'
         dest: '{{ config_dir }}/ocp/downloads/.treeinfo'
+
+    - name: Copy file with owner and permissions
+      copy:
+        src: '{{ templates_dir }}/etc/exports'
+        dest: '{{ config_dir }}/etc/exports'
+        remote_src: yes

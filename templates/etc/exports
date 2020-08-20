@@ -1,0 +1,2 @@
+/nfs/ocp/registry       *(rw,sync,no_wdelay,root_squash,insecure,fsid=0)
+/nfs/ocp/containers     *(rw,sync,no_wdelay,root_squash,insecure,fsid=0)

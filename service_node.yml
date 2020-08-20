@@ -102,6 +102,44 @@
         name: haproxy
         state: restarted
 
+# nfs server install and config
+
+    - name: yum 
+      yum:
+        name: nfs-utils
+        state: latest
+
+    - name: Create nfs directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: nobody
+        group: 
+        mode: '0777'
+      with_items:
+        - '/nfs/ocp'
+        - '/nfs/ocp/registry'
+        - '/nfs/ocp/containers'
+
+    - name: copy haproxy.cfg
+      copy:
+        src: '{{ config_dir }}/etc/exports'
+        dest: '/etc/exports'
+        mode: '444'
+
+    - name: exportfs
+      shell: exportfs -arv
+
+    - name: Make sure a service is enabled
+      systemd:
+        name: nfs-server.service
+        enabled: yes
+
+    - name: nfs restarted
+      systemd:
+        name: nfs-server.service
+        state: restarted
+
 # Open firewall
 
     - name: Open ports
@@ -124,6 +162,9 @@
         - http
         - https 
         - dns
+        - nfs
+        - rpc-bind
+        - mountd
       
     - name: Reload firewalld
       systemd:

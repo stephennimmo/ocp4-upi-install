@@ -19,6 +19,10 @@ The general networking is as follows:
 # Prerequisites
 
 - Install RHEL 8.2 on services machine. (192.168.1.11)
+    - Partitioning
+        - / - 100 GB
+        - /home - 100 GB
+        - /nfs - the rest! This will be used as an NFS server for OCP storage
 - Setup a network bridge for libvirt to use for the bootstrap node.
 ```
 nmcli connection add type bridge con-name br0 ifname br0
@@ -30,6 +34,10 @@ nmcli connection modify br0 ipv4.method manual
 nmcli connection modify br0 bridge.priority '16384'
 nmcli connection up br0
 ```
+
+- Copy pub key to use for login
+
+`ssh-copy-id -i ~/.ssh/nimmo_rsa.pub root@192.168.1.11`
 
 # Quick Instructions for Use
 

@@ -115,3 +115,18 @@ While you are waiting...
 Remove the bootstrap entries. 
 
 Then go delete your bootstrap VM and release the disk space. 
+
+# Adding Container Storage
+
+https://docs.openshift.com/container-platform/4.5/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#installation-registry-storage-non-production_configuring-registry-storage-baremetal
+
+
+## Dynamic NFS Client Provisioner
+
+```
+oc new-project nfs-client-provisioner
+```
+
+https://medium.com/faun/openshift-dynamic-nfs-persistent-volume-using-nfs-client-provisioner-fcbb8c9344e
+
+Don't use the helm chart. It doesn't work. Do the step by step instructions. 

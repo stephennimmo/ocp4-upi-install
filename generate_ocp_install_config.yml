@@ -58,7 +58,8 @@
     - name: Change file ownership, group and permissions
       file:
         path: /var/www/html/ignition
-        mode: '777'
+        mode: '0777'
+        recurse: yes
     
     - name: copy metal
       copy: 

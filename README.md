@@ -23,6 +23,9 @@ The general networking is as follows:
         - / - 100 GB
         - /home - 100 GB
         - /nfs - the rest! This will be used as an NFS server for OCP storage
+- Copy pub key to use for login
+    - `ssh-copy-id -i ~/.ssh/nimmo_rsa.pub root@192.168.1.11`
+
 - Setup a network bridge for libvirt to use for the bootstrap node.
 ```
 nmcli connection add type bridge con-name br0 ifname br0
@@ -32,12 +35,8 @@ nmcli connection modify br0 ipv4.gateway '192.168.1.1'
 nmcli connection modify br0 ipv4.dns '192.168.1.11 8.8.8.8'
 nmcli connection modify br0 ipv4.method manual
 nmcli connection modify br0 bridge.priority '16384'
-nmcli connection up br0
+nmcli connection up br0 && nmcli connection down eno1
 ```
-
-- Copy pub key to use for login
-
-`ssh-copy-id -i ~/.ssh/nimmo_rsa.pub root@192.168.1.11`
 
 # Quick Instructions for Use
 
@@ -53,9 +52,9 @@ nmcli connection up br0
 
 # Start the Bootstrap VM
 
-From the services node, start the virtual machine.
+From the services node, start the virtual machine. You will need to be logged in to the UI of the server. Run the command below, then open the Virtual Machine Manager, select the VM to open. 
 
-`virt-install --name=bootstrap --vcpus=4 --ram=8192 --disk path=/var/lib/libvirt/images/bootstrap.qcow2,size=120,bus=virtio --os-variant rhel8.0 --network bridge=br0,model=virtio --boot menu=on --cdrom /ocp/downloads/installer.iso`
+`virt-install --name=bootstrap --vcpus=4 --ram=8192 --disk path=/nfs/libvirt/images/bootstrap.qcow2,size=120,bus=virtio --os-variant rhel8.0 --network bridge=br0,model=virtio --boot menu=on --cdrom /ocp/downloads/installer.iso`
 
 Once booted, press tab on the boot menu and append the following to the end of the boot options. 
 

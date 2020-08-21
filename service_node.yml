@@ -140,6 +140,13 @@
         name: nfs-server.service
         state: restarted
 
+# libvirt server install and config
+
+    - name: yum 
+      yum:
+        name: ['virt-install', 'virt-viewer', 'virt-manager', 'libvirt-client']
+        state: latest
+
 # Open firewall
 
     - name: Open ports

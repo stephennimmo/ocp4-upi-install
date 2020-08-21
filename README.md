@@ -70,7 +70,11 @@ coreos.inst.ignition_url=http://192.168.1.11:8008/ignition/bootstrap.ign
 
 `/ocp/openshift-install wait-for bootstrap-complete --dir=/ocp/install --log-level=debug`
 
-Once complete, proceed to install the control plane machines. 
+Once you see this.
+
+`INFO Waiting up to 40m0s for bootstrapping to complete...`
+
+Proceed to install the control plane machines. 
 
 # Install RHCOS on Control Plane Machines
 
@@ -92,10 +96,22 @@ coreos.inst.image_url=http://192.168.1.11:8008/rhcos/metal.raw.gz
 coreos.inst.ignition_url=http://192.168.1.11:8008/ignition/master.ign
 ```
 
-Do that 2 more times for the other two machines. 
+Do that 2 more times for the other two machines, changing the ip and hostname respectively. 
+
+Then wait for the currently executing bootstrap-complete command to say it's successful.
+
+`INFO It is now safe to remove the bootstrap resources`
 
 # Wait for the Install
 
 From the services node.
 
 `/ocp/openshift-install wait-for install-complete --dir=/ocp/install --log-level=debug`
+
+While you are waiting...
+
+`vim /etc/haproxy/haproxy.cfg`
+
+Remove the bootstrap entries. 
+
+Then go delete your bootstrap VM and release the disk space. 

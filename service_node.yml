@@ -96,6 +96,14 @@
       with_items:
         - 22623
         - 6443 
+        - 80
+        - 443
+
+    - name: Set haproxy_connect_any flag on and keep it persistent across reboots
+      seboolean:
+        name: haproxy_connect_any
+        state: yes
+        persistent: yes
 
     - name: haproxy restarted
       systemd:
@@ -121,7 +129,7 @@
         - '/nfs/ocp/registry'
         - '/nfs/ocp/containers'
 
-    - name: copy haproxy.cfg
+    - name: copy /etc/exports
       copy:
         src: '{{ config_dir }}/etc/exports'
         dest: '/etc/exports'
@@ -155,6 +163,8 @@
         permanent: yes
         state: enabled
       with_items:
+        - 80/tcp
+        - 443/tcp
         - 8008/tcp
         - 8080/tcp
         - 6443/tcp

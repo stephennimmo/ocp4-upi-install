@@ -1,4 +1,4 @@
-version: 4.5.2
+version: 4.5.6
 domain: whatever.com
 cluster_name: ocp
 ssh_key: 'REQUIRED_KEY'

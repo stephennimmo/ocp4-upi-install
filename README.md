@@ -116,6 +116,47 @@ Remove the bootstrap entries.
 
 Then go delete your bootstrap VM and release the disk space. 
 
+# Day 2
+
+## Add htpasswd for admin user
+
+```
+htpasswd -c -B -b ./openshift.htpasswd user1 secret
+```
+```
+oc create secret generic htpass-secret --from-file=htpasswd=./openshift.htpasswd -n openshift-config
+```
+```
+vim htpasswd-oauth.yaml
+```
+Pasting...
+```
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+  - name: htpasswd_provider 
+    mappingMethod: claim 
+    type: HTPasswd
+    htpasswd:
+      fileData:
+        name: htpass-secret
+```
+
+```
+oc apply -f htpasswd-oauth.yaml
+```
+Add newly added users to be cluster admins...
+```
+oc adm groups new admins
+oc adm groups add-users admins USER
+oc adm policy add-cluster-role-to-group cluster-admin admins
+```
+
+https://docs.openshift.com/container-platform/4.5/authentication/identity_providers/configuring-htpasswd-identity-provider.html
+
 # Adding Container Storage
 
 https://docs.openshift.com/container-platform/4.5/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#installation-registry-storage-non-production_configuring-registry-storage-baremetal
@@ -130,3 +171,10 @@ oc new-project nfs-client-provisioner
 https://medium.com/faun/openshift-dynamic-nfs-persistent-volume-using-nfs-client-provisioner-fcbb8c9344e
 
 Don't use the helm chart. It doesn't work. Do the step by step instructions. 
+
+# Other Day 2
+
+`kamel install --cluster-setup`
+
+
+

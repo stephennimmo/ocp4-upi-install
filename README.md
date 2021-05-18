@@ -122,9 +122,11 @@ Then go delete your bootstrap VM and release the disk space.
 
 ```
 htpasswd -c -B -b ./openshift.htpasswd user1 secret
+htpasswd -B -b ./openshift.htpasswd developer1 secret
+htpasswd -B -b ./openshift.htpasswd developer2 secret
 ```
 ```
-oc create secret generic htpass-secret --from-file=htpasswd=./openshift.htpasswd -n openshift-config
+oc create secret generic htpasswd-secret --from-file=htpasswd=./openshift.htpasswd -n openshift-config
 ```
 ```
 vim htpasswd-oauth.yaml
@@ -142,7 +144,7 @@ spec:
     type: HTPasswd
     htpasswd:
       fileData:
-        name: htpass-secret
+        name: htpasswd-secret
 ```
 
 ```

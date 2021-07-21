@@ -25,6 +25,7 @@ The general networking is as follows:
         - /nfs - the rest! This will be used as an NFS server for OCP storage
 - Copy pub key to use for login
     - `ssh-copy-id -i ~/.ssh/nimmo_rsa.pub root@192.168.1.11`
+    - `ssh-add -K ~/.ssh/nimmo_rsa`
 
 - Setup a network bridge for libvirt to use for the bootstrap node.
 ```
